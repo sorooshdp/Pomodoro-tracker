@@ -1,6 +1,8 @@
 import React from "react";
-const Button: React.FC<{ text: string }> = (props) => {
-    return <button>{props.text}</button>;
+import classes from './Button.module.css';
+
+const Button: React.FC<{ text: string; onClick?: () => void }> = (props) => {
+    return <button onClick={props.onClick} className={classes.button}>{props.text}</button>;
 };
 
 export default Button
