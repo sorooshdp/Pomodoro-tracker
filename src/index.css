@@ -1,0 +1,25 @@
+/*color palett
+ rich black : #040417
+ eerie black : #19191C
+ cerelean : #2978A0
+ cool gray : #7C809B
+ baby powder : #FCFFFC
+*/
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+  background-color: #040417;
+  margin: 0;
+  color: #FCFFFC;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
