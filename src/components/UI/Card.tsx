@@ -1,7 +1,16 @@
-import classes from './Card.module.css'
+import classes from "./Card.module.css";
 
-const Card : React.FC<{style : string }> = ( props ) => {
-    return <div className={`${classes.card} ${props.style}`}> { props.children } </div>
-}
+const Card: React.FC<{ style: string; isPomodoro: boolean }> = (props) => {
+    return (
+        <div
+            className={`${classes.card} ${props.style} ${
+                props.isPomodoro ? classes.pomodoro : classes.break
+            }`}
+        >
+            {" "}
+            {props.children}{" "}
+        </div>
+    );
+};
 
-export default Card
+export default Card;
