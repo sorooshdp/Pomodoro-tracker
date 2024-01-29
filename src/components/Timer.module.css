@@ -9,8 +9,11 @@
     justify-content: center;
 }
 
-.timer {
-    display: flex;
-    justify-content: center;
-    font-size: 4rem;
+
+.noPointer {
+    cursor: not-allowed !important;
+}
+
+.pointer {
+    cursor: pointer;
 }
