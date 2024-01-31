@@ -9,11 +9,22 @@
     justify-content: center;
 }
 
-
 .noPointer {
     cursor: not-allowed !important;
 }
 
 .pointer {
     cursor: pointer;
+}
+
+.setting {
+    position: absolute;
+    display: inline;
+    cursor: pointer;
+    font-size: 30px;
+    transition: transform 0.5s ease;
+}
+
+.setting:hover {
+    transform: rotate(100deg);
 }
