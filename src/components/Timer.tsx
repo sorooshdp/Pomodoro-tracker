@@ -3,11 +3,16 @@ import Card from "../components/UI/Card";
 import Button from "./UI/Button";
 import { useEffect, useState } from "react";
 import Counter from "./Counter";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGear } from "@fortawesome/free-solid-svg-icons";
+import Setting from "./modal/Setting";
+import Backdrop from "./backdrop/Backdrop";
 
 const Timer: React.FC = () => {
     let stopButtonStyle = "";
     const [isPomodoroTimer, setIsPomodoroTimer] = useState<boolean>(true);
     const [isBeginning, setIsBeginning] = useState<boolean>(true);
+    const [IsSettingOpen, setIsSettingOpen] = useState<boolean>(false);
     const [isStarted, setIsStarted] = useState<boolean>(false);
     const [seconds, setSeconds] = useState<number>(120);
 
@@ -50,12 +55,20 @@ const Timer: React.FC = () => {
         }
     };
 
-	const skipBreakHandler = () => {
-		setIsBeginning(true)
-		setIsStarted(false)
-		setSeconds(1200)
-		setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState)
-	}
+    const skipBreakHandler = () => {
+        setIsBeginning(true);
+        setIsStarted(false);
+        setSeconds(1200);
+        setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+    };
+
+    const openSettingHandler = () => {
+        setIsSettingOpen((prevSettingState) => !prevSettingState)
+    };
+
+    const closeSettingHandler = () => {
+        setIsSettingOpen((prevSettingState) => !prevSettingState)
+    }
 
     if (isBeginning) {
         stopButtonStyle = `${classes.noPointer}`;
@@ -65,6 +78,11 @@ const Timer: React.FC = () => {
 
     return (
         <Card style={classes.wrapper} isPomodoro={isPomodoroTimer}>
+            <FontAwesomeIcon
+                icon={faGear}
+                className={classes.setting}
+                onClick={openSettingHandler}
+            />
             <Counter seconds={seconds} />
             <div className={classes.buttonWrapper}>
                 <Button
@@ -82,13 +100,15 @@ const Timer: React.FC = () => {
                     />
                 ) : (
                     <Button
-                        text='skip'
+                        text="skip"
                         style={stopButtonStyle}
                         disabled={isBeginning}
                         onClick={skipBreakHandler}
                     />
                 )}
             </div>
+            {IsSettingOpen ? <Setting /> : null}
+            {IsSettingOpen ? <Backdrop onClick={closeSettingHandler} /> : null}
         </Card>
     );
 };
