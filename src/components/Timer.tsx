@@ -107,7 +107,7 @@ const Timer: React.FC = () => {
                     />
                 )}
             </div>
-            {IsSettingOpen ? <Setting /> : null}
+            {IsSettingOpen ? <Setting  onClick={closeSettingHandler}/> : null}
             {IsSettingOpen ? <Backdrop onClick={closeSettingHandler} /> : null}
         </Card>
     );
