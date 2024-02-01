@@ -6,11 +6,23 @@
  baby powder : #FCFFFC
 */
 
-@font-face {
-    font-family: 'leaner'; 
-    src: url('./fonts/OTF/Leaner-Regular.otf'); 
+:root{
+  --background-color: #040417;
+  --text-color: #FCFFFC;
+  --dark-color: #19191C;
+  --light-color: #7C809B;
+  --secondary-color: #2978A0;
 }
 
+@font-face {
+    font-family: 'leaner-regular'; 
+    src: url('./fonts/Leaner-Regular.otf'); 
+}
+ 
+@font-face {
+  font-family: 'roboto-flex' ;
+  src: url('./fonts/RobotoFlex-VariableFont_GRAD\,XTRA\,YOPQ\,YTAS\,YTDE\,YTFI\,YTLC\,YTUC\,opsz\,slnt\,wdth\,wght.ttf');
+}
 *,
 *::before,
 *::after {
@@ -18,13 +30,12 @@
 }
 
 body {
-  background-color: #040417;
+  letter-spacing: 0.8px;
   margin: 0;
-  color: #FCFFFC;
-  font-family: leaner, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'roboto-flex', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: all 200ms ease-out;
 }
-

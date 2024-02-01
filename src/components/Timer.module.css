@@ -1,3 +1,8 @@
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
 .wrapper {
     width: 60%;
     height: 200px;

@@ -1,17 +1,67 @@
 .setting {
     position: fixed;
     z-index: 200;
-    box-shadow: 0 2px 2px #ccc;
-    background-color: white;
+    width: 28rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color);
     padding: 10px;
     text-align: center;
-    box-sizing: border-box;
     top: 30%;
-    left: 25%;
-    width: 50%;
+    left: 35%;
     transition: all 0.3s ease-out;
+    border-radius: 10px;
 }
 
+.XMark {
+    cursor: pointer;
+    font-size: 19px;
+    padding: auto 0;
+}
+
+.header {
+    display: inline;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2px 9px;
+}
+
+.checkbox {
+    cursor: pointer;
+    appearance: none;
+    background-color: var(--light-color);
+    border-radius: 80px;
+    border-style: none;
+    height: 20px;
+    margin: 0;
+    position: relative;
+    width: 30px;
+}
+
+.checkbox::after {
+    background-color: var(--dark-color);
+    border-radius: 50%;
+    content: "";
+    height: 14px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 14px;
+    transition: all 200ms ease-out;
+}
+
+.checkbox:checked::after {
+    background-color: var(--text-color);
+    left: 13px;
+}
+
+.checkbox:checked {
+    background-color: var(--secondary-color);
+}
 
 @keyframes openModal {
     0% {

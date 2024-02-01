@@ -2,13 +2,13 @@
     padding: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
     border-radius: 10px;
-    background-color: #19191C;
+    background-color: var(--dark-color);
 }
 
 .pomodoro {
-    background: #19191c;
+   background: var(--dark-color);
 }
 
 .break { 
-    background-color: #2978A0;
+    background-color: var(--light-color);
 }
