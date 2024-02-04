@@ -1,11 +1,8 @@
 import classes from "./UI/Card.module.css";
 
-const Card: React.FC<{ style: string; isPomodoro: boolean; children: React.ReactNode }> = (props) => {
+const Card = ({ style, isPomodoro, children }: { style: string; isPomodoro: boolean; children: React.ReactNode }) => {
     return (
-        <div className={`${classes.card} ${props.style} ${props.isPomodoro ? classes.pomodoro : classes.break}`}>
-            {" "}
-            {props.children}{" "}
-        </div>
+        <div className={`${classes.card} ${style} ${isPomodoro ? classes.pomodoro : classes.break}`}> {children} </div>
     );
 };
 

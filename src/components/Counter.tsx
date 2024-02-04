@@ -1,14 +1,8 @@
 import classes from "./Counter.module.css";
 
-interface CounterProps {
-    seconds: number;
-}
-
-const Counter: React.FC<CounterProps> = (props) => {
-    console.log("counter re-render");
-
-    const minutes = Math.floor(props.seconds / 60);
-    const formattedSeconds = props.seconds % 60;
+const Counter = ({ seconds }: { seconds: number }) => {
+    const minutes = Math.floor(seconds / 60);
+    const formattedSeconds = seconds % 60;
     return (
         <div className={classes.timer}>
             <span>

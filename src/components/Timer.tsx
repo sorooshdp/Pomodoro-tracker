@@ -6,9 +6,8 @@ import Setting from "./Setting";
 import Backdrop from "./Backdrop";
 import { useGlobal } from "../hooks/Global";
 
-const Timer: React.FC = () => {
+const Timer = () => {
     const { global, setGlobal, setGlobalKey } = useGlobal();
-    console.log(" timer component re-render ");
     let stopButtonStyle = "";
     const [isPomodoroTimer, setIsPomodoroTimer] = useState<boolean>(true);
     const [isBeginning, setIsBeginning] = useState<boolean>(true);
@@ -17,7 +16,7 @@ const Timer: React.FC = () => {
 
     useEffect(() => {
         if (global.seconds === 0 && isPomodoroTimer) {
-            setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+            setIsPomodoroTimer((prev) => !prev);
             setIsBeginning(true);
             setIsStarted(false);
             setGlobalKey("completedPomodoros", global.completedPomodoros++);
@@ -27,7 +26,7 @@ const Timer: React.FC = () => {
                 setGlobalKey("seconds", global.longBreakLength);
             }
         } else if (global.seconds === 0 && !isPomodoroTimer) {
-            setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+            setIsPomodoroTimer((prev) => !prev);
             setIsBeginning(true);
             setIsStarted(false);
             setGlobalKey("seconds", global.focusLength);
@@ -47,8 +46,8 @@ const Timer: React.FC = () => {
     }, [global.seconds, isStarted]);
 
     const startTimerHandler = () => {
-        setIsStarted((prevTimerState) => !prevTimerState);
-        if (isBeginning) setIsBeginning((prevStopButtonState) => !prevStopButtonState);
+        setIsStarted((prev) => !prev);
+        if (isBeginning) setIsBeginning((prev) => !prev);
     };
 
     const stopPomodoroHandler = () => {
@@ -67,7 +66,7 @@ const Timer: React.FC = () => {
                 setGlobalKey("seconds", global.longBreakLength);
             }
             setGlobal(global);
-            setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+            setIsPomodoroTimer((prev) => !prev);
         }
     };
 
@@ -75,15 +74,15 @@ const Timer: React.FC = () => {
         setIsBeginning(true);
         setIsStarted(false);
         setGlobalKey("seconds", global.focusLength);
-        setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+        setIsPomodoroTimer((prev) => !prev);
     };
 
     const openSettingHandler = () => {
-        setIsSettingOpen((prevSettingState) => !prevSettingState);
+        setIsSettingOpen((prev) => !prev);
     };
 
     const closeSettingHandler = () => {
-        setIsSettingOpen((prevSettingState) => !prevSettingState);
+        setIsSettingOpen((prev) => !prev);
     };
 
     if (isBeginning) {
@@ -108,8 +107,12 @@ const Timer: React.FC = () => {
                     <Button text="skip" style={stopButtonStyle} disabled={isBeginning} onClick={skipBreakHandler} />
                 )}
             </div>
-            {isSettingOpen ? <Setting onClick={closeSettingHandler} /> : null}
-            {isSettingOpen ? <Backdrop onClick={closeSettingHandler} /> : null}
+            {isSettingOpen && (
+                <>
+                    <Setting onClick={closeSettingHandler} />
+                    <Backdrop onClick={closeSettingHandler} />
+                </>
+            )}
         </Card>
     );
 };

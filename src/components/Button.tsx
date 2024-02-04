@@ -1,16 +1,19 @@
 import classes from "./UI/Button.module.css";
 
-interface ButtonProps {
+const Button = ({
+    text,
+    onClick,
+    style,
+    disabled,
+}: {
     text: string;
     onClick?: () => void;
     style?: string;
     disabled?: boolean;
-}
-
-const Button: React.FC<ButtonProps> = (props) => {
+}) => {
     return (
-        <button onClick={props.onClick} className={`${classes.button} ${props.style}`} disabled={props.disabled}>
-            {props.text}
+        <button onClick={onClick} className={`${classes.button} ${style}`} disabled={disabled}>
+            {text}
         </button>
     );
 };
