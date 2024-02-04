@@ -1,10 +1,7 @@
-import classes from "./Timer.module.css";
 import Card from "./Card";
 import Button from "./Button";
 import { useEffect, useState } from "react";
 import Counter from "./Counter";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
 import Setting from "./Setting";
 import Backdrop from "./Backdrop";
 import { useGlobal } from "../hooks/Global";
@@ -58,18 +55,18 @@ const Timer: React.FC = () => {
         if (isStarted) {
             setIsBeginning(true);
             setIsStarted(false);
-            setGlobalKey('seconds', global.focusLength)
+            setGlobalKey("seconds", global.focusLength);
         } else {
             setIsBeginning(true);
             setIsStarted(false);
             if (global.completedPomodoros < global.countToLongBreak) {
-                setGlobalKey('completedPomodoros', global.completedPomodoros)
-                setGlobalKey('seconds', global.shortBreakLength)
+                setGlobalKey("completedPomodoros", global.completedPomodoros);
+                setGlobalKey("seconds", global.shortBreakLength);
             } else {
-                setGlobalKey('completedPomodoros', global.completedPomodoros++)
-                setGlobalKey('seconds', global.longBreakLength)
+                setGlobalKey("completedPomodoros", global.completedPomodoros++);
+                setGlobalKey("seconds", global.longBreakLength);
             }
-            setGlobal(global)
+            setGlobal(global);
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
         }
     };
@@ -77,7 +74,7 @@ const Timer: React.FC = () => {
     const skipBreakHandler = () => {
         setIsBeginning(true);
         setIsStarted(false);
-        setGlobalKey('seconds', global.focusLength)
+        setGlobalKey("seconds", global.focusLength);
         setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
     };
 
@@ -90,16 +87,15 @@ const Timer: React.FC = () => {
     };
 
     if (isBeginning) {
-        stopButtonStyle = `${classes.noPointer}`;
+        stopButtonStyle = `cursor-not-allowed`;
     } else if (isStarted) {
-        stopButtonStyle = `${classes.pointer}`;
+        stopButtonStyle = `cursor-pointer`;
     }
 
     return (
-        <Card style={classes.wrapper} isPomodoro={isPomodoroTimer}>
-            <FontAwesomeIcon icon={faGear} className={classes.setting} onClick={openSettingHandler} />
+        <Card style="w-2/3 h-200px my-8" isPomodoro={isPomodoroTimer}>
             <Counter seconds={global.seconds} />
-            <div className={classes.buttonWrapper}>
+            <div className="flex justify-center">
                 <Button text={isStarted ? "Pause" : "Start"} onClick={startTimerHandler} />
                 {isPomodoroTimer ? (
                     <Button

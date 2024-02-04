@@ -9,11 +9,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = (props) => {
     return (
-        <button
-            onClick={props.onClick}
-            className={`${classes.button} ${props.style}`}
-            disabled={props.disabled}
-        >
+        <button onClick={props.onClick} className={`${classes.button} ${props.style}`} disabled={props.disabled}>
             {props.text}
         </button>
     );
