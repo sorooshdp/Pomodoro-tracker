@@ -92,7 +92,7 @@ const Timer = () => {
     }
 
     return (
-        <Card style="w-2/3 h-200px my-8" isPomodoro={isPomodoroTimer}>
+        <Card style="w-[50rem] h-200px my-8 rounded-[10px]" isPomodoro={isPomodoroTimer}>
             <Counter seconds={global.seconds} />
             <div className="flex justify-center">
                 <Button text={isStarted ? "Pause" : "Start"} onClick={startTimerHandler} />
