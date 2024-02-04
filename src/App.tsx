@@ -5,7 +5,13 @@ function App() {
     const { global, setGlobal, setGlobalKey } = createGlobal();
 
     return (
-        <globalCtx.Provider value={{ global: global, setGlobal: setGlobal, setGlobalKey: setGlobalKey }}>
+        <globalCtx.Provider
+            value={{
+                global: global,
+                setGlobal: setGlobal,
+                setGlobalKey: setGlobalKey,
+            }}
+        >
             <Timer />
         </globalCtx.Provider>
     );

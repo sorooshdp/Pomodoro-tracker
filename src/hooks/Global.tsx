@@ -10,9 +10,18 @@
  */
 import { createContext, useContext, useState } from "react";
 
+
 // Default Global type ../types.d.ts:  Global["global"]
 export let globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
+    seconds : 25 * 60,
+    focusLength: 25 * 60,
+    countToLongBreak: 4,
+    shortBreakLength: 5 * 60,
+    longBreakLength: 15 * 60,
+    completedPomodoros : 0,
+    autoResume: false,
+    notifications: true,
 });
 
 function initGlobalDefault(globalDefault: Global["global"]) {
@@ -26,6 +35,7 @@ export const useGlobal = () => useContext<Global>(globalCtx);
 
 const createGlobal = () => {
     const [globalState, setGlobalState] = useState<Global["global"]>(globalDefault);
+    
 
     function setGlobalKey<K extends keyof Global["global"]>(element: K, newVal: Global["global"][K]) {
         setGlobalState((prev) => {

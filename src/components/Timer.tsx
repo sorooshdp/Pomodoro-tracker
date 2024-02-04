@@ -7,72 +7,69 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import Setting from "./Setting";
 import Backdrop from "./Backdrop";
-import { useTimer } from "./timer-context";
+import { useGlobal } from "../hooks/Global";
 
 const Timer: React.FC = () => {
-    console.log(" timer component re-render ")
-    let completedPomodoros = 0;
+    const { global, setGlobal, setGlobalKey } = useGlobal();
+    console.log(" timer component re-render ");
     let stopButtonStyle = "";
-    const { focusLength, longBreakLength, shortBreakLength, countToLongBreak } =
-        useTimer();
     const [isPomodoroTimer, setIsPomodoroTimer] = useState<boolean>(true);
     const [isBeginning, setIsBeginning] = useState<boolean>(true);
     const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
     const [isStarted, setIsStarted] = useState<boolean>(false);
-    const [seconds, setSeconds] = useState<number>(focusLength);
 
     useEffect(() => {
-        if (seconds === 0 && isPomodoroTimer ) {
+        if (global.seconds === 0 && isPomodoroTimer) {
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
             setIsBeginning(true);
             setIsStarted(false);
-            if (completedPomodoros < countToLongBreak) {
-                completedPomodoros++;
-                setSeconds(shortBreakLength);
+            setGlobalKey("completedPomodoros", global.completedPomodoros++);
+            if (global.completedPomodoros % global.countToLongBreak > 0) {
+                setGlobalKey("seconds", global.shortBreakLength);
             } else {
-                completedPomodoros = 0;
-                setSeconds(longBreakLength);
+                setGlobalKey("seconds", global.longBreakLength);
             }
-            return;
-        } else if ( seconds === 0 && isPomodoroTimer) {
+        } else if (global.seconds === 0 && !isPomodoroTimer) {
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
             setIsBeginning(true);
             setIsStarted(false);
-            setSeconds(focusLength)
+            setGlobalKey("seconds", global.focusLength);
         }
+        setGlobal(global);
 
         if (isStarted) {
             const timer = setInterval(() => {
-                setSeconds((prevSeconds) => prevSeconds - 1);
+                setGlobalKey("seconds", global.seconds--);
+                setGlobal(global);
             }, 1000);
 
             return () => clearInterval(timer);
         } else {
             return;
         }
-    }, [seconds, isStarted]);
+    }, [global.seconds, isStarted]);
 
     const startTimerHandler = () => {
         setIsStarted((prevTimerState) => !prevTimerState);
-        if (isBeginning)
-            setIsBeginning((prevStopButtonState) => !prevStopButtonState);
+        if (isBeginning) setIsBeginning((prevStopButtonState) => !prevStopButtonState);
     };
 
     const stopPomodoroHandler = () => {
         if (isStarted) {
             setIsBeginning(true);
             setIsStarted(false);
-            setSeconds(focusLength);
+            setGlobalKey('seconds', global.focusLength)
         } else {
             setIsBeginning(true);
             setIsStarted(false);
-            if (completedPomodoros < countToLongBreak) {
-                completedPomodoros++;
-                setSeconds(shortBreakLength);
+            if (global.completedPomodoros < global.countToLongBreak) {
+                setGlobalKey('completedPomodoros', global.completedPomodoros)
+                setGlobalKey('seconds', global.shortBreakLength)
             } else {
-                completedPomodoros = 0;
-                setSeconds(longBreakLength);
+                setGlobalKey('completedPomodoros', global.completedPomodoros++)
+                setGlobalKey('seconds', global.longBreakLength)
             }
+            setGlobal(global)
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
         }
     };
@@ -80,7 +77,7 @@ const Timer: React.FC = () => {
     const skipBreakHandler = () => {
         setIsBeginning(true);
         setIsStarted(false);
-        setSeconds(focusLength);
+        setGlobalKey('seconds', global.focusLength)
         setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
     };
 
@@ -100,33 +97,19 @@ const Timer: React.FC = () => {
 
     return (
         <Card style={classes.wrapper} isPomodoro={isPomodoroTimer}>
-            <FontAwesomeIcon
-                icon={faGear}
-                className={classes.setting}
-                onClick={openSettingHandler}
-            />
-            <Counter seconds={seconds} />
+            <FontAwesomeIcon icon={faGear} className={classes.setting} onClick={openSettingHandler} />
+            <Counter seconds={global.seconds} />
             <div className={classes.buttonWrapper}>
-                <Button
-                    text={isStarted ? "Pause" : "Start"}
-                    onClick={startTimerHandler}
-                />
+                <Button text={isStarted ? "Pause" : "Start"} onClick={startTimerHandler} />
                 {isPomodoroTimer ? (
                     <Button
-                        text={
-                            isBeginning ? "Stop" : isStarted ? "Stop" : "done"
-                        }
+                        text={isBeginning ? "Stop" : isStarted ? "Stop" : "done"}
                         style={stopButtonStyle}
                         disabled={isBeginning}
                         onClick={stopPomodoroHandler}
                     />
                 ) : (
-                    <Button
-                        text="skip"
-                        style={stopButtonStyle}
-                        disabled={isBeginning}
-                        onClick={skipBreakHandler}
-                    />
+                    <Button text="skip" style={stopButtonStyle} disabled={isBeginning} onClick={skipBreakHandler} />
                 )}
             </div>
             {isSettingOpen ? <Setting onClick={closeSettingHandler} /> : null}
