@@ -1,16 +1,13 @@
 import Timer from "./components/Timer";
-import UIContextProvider from "./store/ui-context";
-import TimerContextProvider from "./components/timer-context";
+import createGlobal, { globalCtx } from "./hooks/Global";
 
 function App() {
-    console.log(" app re-render")
+    const { global, setGlobal, setGlobalKey } = createGlobal();
 
     return (
-        <UIContextProvider>
-            <TimerContextProvider>
-                <Timer />
-            </TimerContextProvider>
-        </UIContextProvider>
+        <globalCtx.Provider value={{ global: global, setGlobal: setGlobal, setGlobalKey: setGlobalKey }}>
+            <Timer />
+        </globalCtx.Provider>
     );
 }
 
