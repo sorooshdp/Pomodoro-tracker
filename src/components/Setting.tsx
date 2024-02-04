@@ -1,24 +1,23 @@
 import { createPortal } from "react-dom";
 import React from "react";
 import { useGlobal } from "../hooks/Global";
-
+import { useCallback } from "react";
 const Setting = ({ onClick }: { onClick: () => void }) => {
     const { global, setGlobalKey } = useGlobal();
-    const changeFocusHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const changeFocusHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
         setGlobalKey("focusLength", parseInt(event.target.value));
-    };
+    }, []);
 
-    const changeLongBreakHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // setLongBreakDelay(parseInt(event.target.value));
-    };
-
-    const changeShortBreakHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // setShortBreakLength(parseInt(event.target.value));
-    };
-
-    const changeLongBreakLengthHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // setLongBreakLength(parseInt(event.target.value));
-    };
+    
+    const changeLongBreakHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setGlobalKey("countToLongBreak", parseInt(event.target.value));
+    }, []);
+    const changeLongBreakLengthHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setGlobalKey("longBreakLength", parseInt(event.target.value));
+    }, []);
+    const changeShortBreakHandler = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setGlobalKey("shortBreakLength", parseInt(event.target.value));
+    }, []);
 
     const toggleNotificationsHandler = () => {
         setGlobalKey("notifications", !global.notifications);

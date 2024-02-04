@@ -31,12 +31,10 @@ const Timer = () => {
             setIsStarted(false);
             setGlobalKey("seconds", global.focusLength);
         }
-        setGlobal(global);
 
         if (isStarted) {
             const timer = setInterval(() => {
-                setGlobalKey("seconds", global.seconds--);
-                setGlobal(global);
+                setGlobalKey("seconds", global.seconds - 1);
             }, 1000);
 
             return () => clearInterval(timer);
@@ -59,13 +57,12 @@ const Timer = () => {
             setIsBeginning(true);
             setIsStarted(false);
             if (global.completedPomodoros < global.countToLongBreak) {
-                setGlobalKey("completedPomodoros", global.completedPomodoros);
+                setGlobalKey("completedPomodoros", global.completedPomodoros + 1);
                 setGlobalKey("seconds", global.shortBreakLength);
             } else {
-                setGlobalKey("completedPomodoros", global.completedPomodoros++);
+                setGlobalKey("completedPomodoros", global.completedPomodoros + 1);
                 setGlobalKey("seconds", global.longBreakLength);
             }
-            setGlobal(global);
             setIsPomodoroTimer((prev) => !prev);
         }
     };
