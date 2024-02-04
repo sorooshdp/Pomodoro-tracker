@@ -1,28 +1,44 @@
 import classes from "./Timer.module.css";
-import Card from "../components/UI/Card";
-import Button from "./UI/Button";
+import Card from "./Card";
+import Button from "./Button";
 import { useEffect, useState } from "react";
 import Counter from "./Counter";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
-import Setting from "./modal/Setting";
-import Backdrop from "./backdrop/Backdrop";
+import Setting from "./Setting";
+import Backdrop from "./Backdrop";
+import { useTimer } from "./timer-context";
 
 const Timer: React.FC = () => {
+    console.log(" timer component re-render ")
+    let completedPomodoros = 0;
     let stopButtonStyle = "";
+    const { focusLength, longBreakLength, shortBreakLength, countToLongBreak } =
+        useTimer();
     const [isPomodoroTimer, setIsPomodoroTimer] = useState<boolean>(true);
     const [isBeginning, setIsBeginning] = useState<boolean>(true);
-    const [IsSettingOpen, setIsSettingOpen] = useState<boolean>(false);
+    const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
     const [isStarted, setIsStarted] = useState<boolean>(false);
-    const [seconds, setSeconds] = useState<number>(120);
+    const [seconds, setSeconds] = useState<number>(focusLength);
 
     useEffect(() => {
-        if (seconds === 0) {
+        if (seconds === 0 && isPomodoroTimer ) {
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
             setIsBeginning(true);
             setIsStarted(false);
-            setSeconds(300);
+            if (completedPomodoros < countToLongBreak) {
+                completedPomodoros++;
+                setSeconds(shortBreakLength);
+            } else {
+                completedPomodoros = 0;
+                setSeconds(longBreakLength);
+            }
             return;
+        } else if ( seconds === 0 && isPomodoroTimer) {
+            setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
+            setIsBeginning(true);
+            setIsStarted(false);
+            setSeconds(focusLength)
         }
 
         if (isStarted) {
@@ -46,11 +62,17 @@ const Timer: React.FC = () => {
         if (isStarted) {
             setIsBeginning(true);
             setIsStarted(false);
-            setSeconds(1200);
+            setSeconds(focusLength);
         } else {
             setIsBeginning(true);
             setIsStarted(false);
-            setSeconds(300);
+            if (completedPomodoros < countToLongBreak) {
+                completedPomodoros++;
+                setSeconds(shortBreakLength);
+            } else {
+                completedPomodoros = 0;
+                setSeconds(longBreakLength);
+            }
             setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
         }
     };
@@ -58,17 +80,17 @@ const Timer: React.FC = () => {
     const skipBreakHandler = () => {
         setIsBeginning(true);
         setIsStarted(false);
-        setSeconds(1200);
+        setSeconds(focusLength);
         setIsPomodoroTimer((prevPomodoroState) => !prevPomodoroState);
     };
 
     const openSettingHandler = () => {
-        setIsSettingOpen((prevSettingState) => !prevSettingState)
+        setIsSettingOpen((prevSettingState) => !prevSettingState);
     };
 
     const closeSettingHandler = () => {
-        setIsSettingOpen((prevSettingState) => !prevSettingState)
-    }
+        setIsSettingOpen((prevSettingState) => !prevSettingState);
+    };
 
     if (isBeginning) {
         stopButtonStyle = `${classes.noPointer}`;
@@ -107,8 +129,8 @@ const Timer: React.FC = () => {
                     />
                 )}
             </div>
-            {IsSettingOpen ? <Setting  onClick={closeSettingHandler}/> : null}
-            {IsSettingOpen ? <Backdrop onClick={closeSettingHandler} /> : null}
+            {isSettingOpen ? <Setting onClick={closeSettingHandler} /> : null}
+            {isSettingOpen ? <Backdrop onClick={closeSettingHandler} /> : null}
         </Card>
     );
 };

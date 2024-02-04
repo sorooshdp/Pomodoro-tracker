@@ -1,5 +1,4 @@
-import React, { CSSProperties } from "react";
-import classes from "./Button.module.css";
+import classes from "./UI/Button.module.css";
 
 interface ButtonProps {
     text: string;

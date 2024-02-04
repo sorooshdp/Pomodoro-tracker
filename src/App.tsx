@@ -1,13 +1,15 @@
 import Timer from "./components/Timer";
-import UIContextProvider, { useTheme } from "./store/ui-context";
-import classes from "./App.module.css";
+import UIContextProvider from "./store/ui-context";
+import TimerContextProvider from "./components/timer-context";
 
 function App() {
-    const { theme } = useTheme();
+    console.log(" app re-render")
 
     return (
         <UIContextProvider>
-            <Timer />
+            <TimerContextProvider>
+                <Timer />
+            </TimerContextProvider>
         </UIContextProvider>
     );
 }

@@ -1,4 +1,4 @@
-import classes from "./Card.module.css";
+import classes from "./UI/Card.module.css";
 
 const Card: React.FC<{ style: string; isPomodoro: boolean }> = (props) => {
     return (

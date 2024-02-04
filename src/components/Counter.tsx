@@ -5,6 +5,7 @@ interface CounterProps {
 }
 
 const Counter: React.FC<CounterProps> = (props) => {
+    console.log("counter re-render")
     
     const minutes = Math.floor(props.seconds / 60);
     const formattedSeconds = props.seconds % 60;

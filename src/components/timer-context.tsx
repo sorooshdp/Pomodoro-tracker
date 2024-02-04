@@ -44,7 +44,7 @@ export const useTimer = (): timerContextObj => {
  * long break, short break length, long break length, Auto resume timer, sound, notification
  * and other timer related information
  */
-const TimerContextProvider: React.FC = (props) => {
+const TimerContextProvider: React.FC<{children : React.ReactNode }> = (props) => {
     const [focusLength, setFocusLength] = useState<number>(25);
     const [countToLongBreak, setCountToLongBreak] = useState<number>(4);
     const [shortBreakLength, setShortBreakLength] = useState<number>(5);
