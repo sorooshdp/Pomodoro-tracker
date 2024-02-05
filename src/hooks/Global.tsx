@@ -13,19 +13,20 @@ import { createContext, useContext, useState } from "react";
 // Default Global type ../types.d.ts:  Global["global"]
 export let globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
-    mode: "FOCUS",
+    mode: 0, // Mode.Focus gives reading undefined error
     running: false,
-    seconds : 25 ,
-    focusLength: 25,
+    seconds: 25 * 60,
+    focusLength: 25 * 60,
     countToLongBreak: 4,
-    shortBreakLength: 5 ,
-    longBreakLength: 15,
-    completedPomodoros : 0,
+    shortBreakLength: 5 * 60,
+    longBreakLength: 15 * 60,
+    completedPomodoros: 0,
 });
 
-function initGlobalDefault(globalDefault: Global["global"]) {
+function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
     globalDefault = lsGet<Global["global"]>("globalDefault") ?? globalDefault;
     // Processing Default here
+    globalDefault.running = false;
     return globalDefault;
 }
 
@@ -34,14 +35,13 @@ export const useGlobal = () => useContext<Global>(globalCtx);
 
 const createGlobal = () => {
     const [globalState, setGlobalState] = useState<Global["global"]>(globalDefault);
-    
 
-    function setGlobalKey<K extends keyof Global["global"]>(element: K, newVal: Global["global"][K]) {
+    function setGlobalKey<K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) {
         setGlobalState((prev) => {
-            prev[element] = newVal;
+            prev[key] = newVal;
+            lsSet("globalDefault", prev); // TODO this is not good
             return { ...prev };
         });
-        lsSet("globalDefault", globalState);
     }
     function setGlobal(newState: Global["global"]) {
         setGlobalState(newState);

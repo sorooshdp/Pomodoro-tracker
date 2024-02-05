@@ -1,7 +1,7 @@
 interface Global {
     // default global type here
     global: {
-        mode: "FOCUS" | "LONG_BREAK" | "SHORT_BREAK";
+        mode: Mode;
         running: boolean;
         seconds: number;
         focusLength: number;
@@ -10,6 +10,6 @@ interface Global {
         longBreakLength: number;
         completedPomodoros: number;
     };
-    setGlobalKey: <K extends keyof Global["global"]>(element: K, newVal: Global["global"][K]) => void;
+    setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
     setGlobal: (newState: Global["global"]) => any;
 }

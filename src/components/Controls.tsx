@@ -3,28 +3,43 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import RotateLeftRoundedIcon from "@mui/icons-material/RotateLeftRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import { useGlobal } from "../hooks/Global";
+import { motion } from "framer-motion";
 
-const Controls = ({ toggleRunning, resetTimer }: { toggleRunning: () => void; resetTimer: () => void }) => {
-    const { global } = useGlobal();
+const Controls = ({ resetTimer }: { resetTimer: () => void }) => {
+    const { global, setGlobalKey } = useGlobal();
+
+    const toggleRunning = () => {
+        setGlobalKey("running", !global.running);
+    };
 
     return (
-        <div className="flex justify-between items-center w-[384px]">
-            <button className="w-[80px] h-[80px] rounded-[24px] text-[color:var(--text-color) bg-[color:var(--dark-color)] mx-[1rem]">
-                <MoreHorizRoundedIcon style={{ fontSize: "30px" }} />
-            </button>
-            <button
-                className="w-[128px] h-[96px] rounded-[24px] text-[color:var(--text-color) bg-[color:var(--dark-color)] mx-[1rem]"
+        <div className="flex justify-between items-center w-fit absolute bottom-[100px]">
+            <motion.div
+                whileTap={{ scale: 0.8 }}
+                className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"
+            >
+                <MoreHorizRoundedIcon className="center" style={{ fontSize: "40px" }} />
+            </motion.div>
+            <motion.div
+                whileTap={{ scale: 0.8 }}
+                className={`${
+                    global.running ? "!bg-red-600 !text-black" : "hover:bg-prim"
+                } relative w-[110px] h-[110px] rounded-[100px] text-txt bg-second mx-[1rem] transition-colors hover:text-black`}
                 onClick={toggleRunning}
             >
                 {global.running ? (
-                    <PauseRoundedIcon style={{ fontSize: "50px" }} />
+                    <PauseRoundedIcon className="center transition-colors" style={{ fontSize: "60px" }} />
                 ) : (
-                    <PlayArrowRoundedIcon style={{ fontSize: "50px" }} />
+                    <PlayArrowRoundedIcon className="center transition-colors" style={{ fontSize: "60px" }} />
                 )}
-            </button>
-            <button className="w-[80px] h-[80px] rounded-[24px] text-[color:var(--text-color) bg-[color:var(--dark-color)] mx-[1rem]" onClick={resetTimer}>
-                <RotateLeftRoundedIcon style={{ fontSize: "30px" }} />
-            </button>
+            </motion.div>
+            <motion.div
+                whileTap={{ scale: 0.8 }}
+                className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"
+                onClick={resetTimer}
+            >
+                <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />
+            </motion.div>
         </div>
     );
 };
