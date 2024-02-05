@@ -12,7 +12,7 @@ function App() {
                 setGlobalKey: setGlobalKey,
             }}
         >
-            <Timer />
+        <Timer />
         </globalCtx.Provider>
     );
 }

@@ -10,18 +10,17 @@
  */
 import { createContext, useContext, useState } from "react";
 
-
 // Default Global type ../types.d.ts:  Global["global"]
 export let globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
-    seconds : 25 * 60,
-    focusLength: 25 * 60,
+    mode: "FOCUS",
+    running: false,
+    seconds : 25 ,
+    focusLength: 25,
     countToLongBreak: 4,
-    shortBreakLength: 5 * 60,
-    longBreakLength: 15 * 60,
+    shortBreakLength: 5 ,
+    longBreakLength: 15,
     completedPomodoros : 0,
-    autoResume: false,
-    notifications: true,
 });
 
 function initGlobalDefault(globalDefault: Global["global"]) {

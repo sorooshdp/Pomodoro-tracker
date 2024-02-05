@@ -1,38 +1,17 @@
-import Card from "./Card";
-import Button from "./Button";
-import { useEffect, useState } from "react";
-import Counter from "./Counter";
-import Setting from "./Setting";
-import Backdrop from "./Backdrop";
+import { useEffect } from "react";
 import { useGlobal } from "../hooks/Global";
+import Clock from "./Clock";
+import Controls from "./Controls";
+import PomodoroMode from "./PomodoroMode";
 
 const Timer = () => {
-    const { global, setGlobal, setGlobalKey } = useGlobal();
-    let stopButtonStyle = "";
-    const [isPomodoroTimer, setIsPomodoroTimer] = useState<boolean>(true);
-    const [isBeginning, setIsBeginning] = useState<boolean>(true);
-    const [isSettingOpen, setIsSettingOpen] = useState<boolean>(false);
-    const [isStarted, setIsStarted] = useState<boolean>(false);
+    const { global, setGlobalKey } = useGlobal();
 
     useEffect(() => {
-        if (global.seconds === 0 && isPomodoroTimer) {
-            setIsPomodoroTimer((prev) => !prev);
-            setIsBeginning(true);
-            setIsStarted(false);
-            setGlobalKey("completedPomodoros", global.completedPomodoros++);
-            if (global.completedPomodoros % global.countToLongBreak > 0) {
-                setGlobalKey("seconds", global.shortBreakLength);
-            } else {
-                setGlobalKey("seconds", global.longBreakLength);
-            }
-        } else if (global.seconds === 0 && !isPomodoroTimer) {
-            setIsPomodoroTimer((prev) => !prev);
-            setIsBeginning(true);
-            setIsStarted(false);
-            setGlobalKey("seconds", global.focusLength);
+        if ( global.seconds <= 0 ) {
+            resetTimer()
         }
-
-        if (isStarted) {
+        if (global.running) {
             const timer = setInterval(() => {
                 setGlobalKey("seconds", global.seconds - 1);
             }, 1000);
@@ -41,76 +20,43 @@ const Timer = () => {
         } else {
             return;
         }
-    }, [global.seconds, isStarted]);
+    }, [global.seconds, global.running]);
 
-    const startTimerHandler = () => {
-        setIsStarted((prev) => !prev);
-        if (isBeginning) setIsBeginning((prev) => !prev);
+    const toggleRunning = () => {
+        setGlobalKey("running", !global.running);
     };
 
-    const stopPomodoroHandler = () => {
-        if (isStarted) {
-            setIsBeginning(true);
-            setIsStarted(false);
+    const changeMode = (mode : string) => {
+        setGlobalKey("running", false)
+        if (mode === "FOCUS") {
+            setGlobalKey("mode", mode)
             setGlobalKey("seconds", global.focusLength);
+        } else if (mode === "LONG_BREAK") {
+            setGlobalKey("mode", mode)
+            setGlobalKey("seconds", global.longBreakLength);
+        } else if ( mode === "SHORT_BREAK") {
+            setGlobalKey("mode" , mode)
+            setGlobalKey("seconds", global.shortBreakLength);
+        }
+    }
+
+    const resetTimer = () => {
+        setGlobalKey("running" , false)
+        if (global.mode === "FOCUS") {
+            setGlobalKey("seconds", global.focusLength);
+        } else if (global.mode === "LONG_BREAK") {
+            setGlobalKey("seconds", global.longBreakLength);
         } else {
-            setIsBeginning(true);
-            setIsStarted(false);
-            if (global.completedPomodoros < global.countToLongBreak) {
-                setGlobalKey("completedPomodoros", global.completedPomodoros + 1);
-                setGlobalKey("seconds", global.shortBreakLength);
-            } else {
-                setGlobalKey("completedPomodoros", global.completedPomodoros + 1);
-                setGlobalKey("seconds", global.longBreakLength);
-            }
-            setIsPomodoroTimer((prev) => !prev);
+            setGlobalKey("seconds", global.shortBreakLength);
         }
     };
 
-    const skipBreakHandler = () => {
-        setIsBeginning(true);
-        setIsStarted(false);
-        setGlobalKey("seconds", global.focusLength);
-        setIsPomodoroTimer((prev) => !prev);
-    };
-
-    const openSettingHandler = () => {
-        setIsSettingOpen((prev) => !prev);
-    };
-
-    const closeSettingHandler = () => {
-        setIsSettingOpen((prev) => !prev);
-    };
-
-    if (isBeginning) {
-        stopButtonStyle = `cursor-not-allowed`;
-    } else if (isStarted) {
-        stopButtonStyle = `cursor-pointer`;
-    }
-
     return (
-        <Card style="w-[50rem] h-200px my-8 rounded-[10px]" isPomodoro={isPomodoroTimer}>
-            <Counter seconds={global.seconds} />
-            <div className="flex justify-center">
-                <Button text={isStarted ? "Pause" : "Start"} onClick={startTimerHandler} />
-                {isPomodoroTimer ? (
-                    <Button
-                        text={isBeginning ? "Stop" : isStarted ? "Stop" : "done"}
-                        style={stopButtonStyle}
-                        disabled={isBeginning}
-                        onClick={stopPomodoroHandler}
-                    />
-                ) : (
-                    <Button text="skip" style={stopButtonStyle} disabled={isBeginning} onClick={skipBreakHandler} />
-                )}
-            </div>
-            {isSettingOpen && (
-                <>
-                    <Setting onClick={closeSettingHandler} />
-                    <Backdrop onClick={closeSettingHandler} />
-                </>
-            )}
-        </Card>
+        <div className="flex flex-col items-center justify-center">
+            <PomodoroMode changeMode={changeMode}/>
+            <Clock seconds={global.seconds} />
+            <Controls toggleRunning={toggleRunning} resetTimer={resetTimer} />
+        </div>
     );
 };
 
