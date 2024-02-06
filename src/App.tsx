@@ -1,3 +1,4 @@
+import Settings from "./components/Settings";
 import Timer from "./components/Timer";
 import createGlobal, { globalCtx } from "./hooks/Global";
 
@@ -12,7 +13,8 @@ function App() {
                 setGlobalKey: setGlobalKey,
             }}
         >
-        <Timer />
+            <Timer />
+            <Settings />
         </globalCtx.Provider>
     );
 }

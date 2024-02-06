@@ -11,11 +11,16 @@ const Controls = memo(({ resetTimer }: { resetTimer: () => void }) => {
         setGlobalKey("running", !global.running);
     }, [global.running]);
 
+    const settingShowHandle = useCallback(() => {
+        setGlobalKey("settingsShow", true);
+    }, []);
+
     return (
         <div className="flex justify-between items-center w-fit absolute bottom-[100px]">
             <motion.div
                 whileTap={whileTap}
                 className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"
+                onClick={settingShowHandle}
             >
                 {icons.MoreHorizRoundedIcon}
             </motion.div>

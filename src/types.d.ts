@@ -9,7 +9,13 @@ interface Global {
         shortBreakLength: number;
         longBreakLength: number;
         completedPomodoros: number;
+        settingsShow: boolean;
     };
     setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
     setGlobal: (newState: Global["global"]) => any;
+}
+
+interface WindowSize {
+    w: number;
+    h: number;
 }

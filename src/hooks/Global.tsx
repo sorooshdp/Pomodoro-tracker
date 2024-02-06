@@ -15,12 +15,14 @@ export let globalDefault: Global["global"] = initGlobalDefault({
     shortBreakLength: 5 * 60,
     longBreakLength: 15 * 60,
     completedPomodoros: 0,
+    settingsShow: false,
 });
 
 function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
     globalDefault = lsGet<Global["global"]>("globalDefault") ?? globalDefault;
     // Processing Default here
     globalDefault.running = false;
+    globalDefault.settingsShow = false;
     return globalDefault;
 }
 
@@ -36,7 +38,7 @@ export const useGlobal = () => useContext<Global>(globalCtx);
 
 /**
  * # Example
- * 
+ *
  * App.tsx:
  * ```jsx
  * const { global, setGlobal, setGlobalKey } = createGlobal();
