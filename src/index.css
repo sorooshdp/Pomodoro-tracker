@@ -20,6 +20,7 @@
     --second-color: #000;
     --primary-color: #4cacff;
     --shadow-color: #000;
+    --shadow-length: 0px;
     font-family: "roboto-flex", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -52,8 +53,8 @@ body {
     align-items: flex-start;
     min-width: 320px;
     min-height: 100vh;
-    box-shadow: inset 0px 0px 170px -80px var(--shadow-color);
-    transition: all 0.5s ease ;
+    box-shadow: inset 0px 0px 100px var(--shadow-length) var(--shadow-color);
+    transition: all 0.5s ease;
 }
 
 h1 {

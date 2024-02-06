@@ -1,12 +1,20 @@
 import { motion } from "framer-motion";
 import { useGlobal } from "../hooks/Global";
 import { Mode } from "./Timer";
-import { memo, useCallback } from "react";
-
+import { memo, useCallback, CSSProperties, useMemo } from "react";
+import useWindowSize from "../hooks/useWindowSize";
 const whileTap = { scale: 0.8 };
 
 const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void }) => {
     const { global, setGlobalKey } = useGlobal();
+    const windowSize = useWindowSize();
+
+    const containerStyleMemo: CSSProperties = useMemo(
+        () => ({
+            top: windowSize.h / 10,
+        }),
+        [windowSize.h]
+    );
 
     const changeMode = useCallback(
         (mode: Mode) => {
@@ -28,7 +36,10 @@ const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void 
     );
 
     return (
-        <div className="flex text-[18px] font-bold h-[60px] justify-between   w-[384px] py-[4px] px-[2px] bg-black rounded-full">
+        <div
+            style={containerStyleMemo}
+            className="flex text-[18px] font-bold h-[60px] justify-between absolute  w-[384px] py-[4px] px-[2px] bg-black rounded-full"
+        >
             <motion.div
                 className={`
                     ${

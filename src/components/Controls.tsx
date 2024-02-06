@@ -1,12 +1,19 @@
 import { icons, useGlobal } from "../hooks/Global";
 import { motion } from "framer-motion";
-import { memo, useCallback } from "react";
+import { memo, useCallback, CSSProperties, useMemo } from "react";
+import useWindowSize from "../hooks/useWindowSize";
 
 const whileTap = { scale: 0.8 };
 
 const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
     const { global, setGlobalKey } = useGlobal();
-
+    const windowSize = useWindowSize();
+    const containerStyleMemo: CSSProperties = useMemo(
+        () => ({
+            bottom: windowSize.h / 12,
+        }),
+        [windowSize.h]
+    );
     const toggleRunning = useCallback(() => {
         setGlobalKey("running", !global.running);
     }, [global.running]);
@@ -16,7 +23,7 @@ const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
     }, []);
 
     return (
-        <div className="flex justify-between items-center w-fit ">
+        <div style={containerStyleMemo} className="flex justify-between absolute items-center w-fit ">
             <motion.div
                 whileTap={whileTap}
                 className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"
