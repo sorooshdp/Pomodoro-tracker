@@ -1,10 +1,12 @@
 import { motion } from "framer-motion";
 import { memo } from "react";
+import { useGlobal } from "../hooks/Global";
 
 const motionInitial = { opacity: 0, y: 0 };
 const motionAnimate = { opacity: 1, y: 0 };
 const motionTransition = { duration: 0.3 };
 const Clock = memo(({ seconds }: { seconds: number }) => {
+    const { global } = useGlobal();
     const mins = Math.floor(seconds / 60);
     const min0 = mins % 10;
     const min1 = Math.floor(mins / 10);
@@ -16,7 +18,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
         <div className="flex flex-col justify-center items-center absolute top-[45%] -translate-y-1/2">
             <div className="text-[150px] font-[900] h-[150px] flex flex-row">
                 <motion.div
-                    key={min1 === 0 ? "min1" : min1} // at 00:XX or XX:00 they get the same key and its bad
+                    key={global.mode + "min1" + min1}
                     initial={motionInitial}
                     animate={motionAnimate}
                     transition={motionTransition}
@@ -24,7 +26,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {min1}
                 </motion.div>
                 <motion.div
-                    key={min0 === 0 ? "min0" : min0}
+                    key={global.mode + "min0" + min0}
                     initial={motionInitial}
                     animate={motionAnimate}
                     transition={motionTransition}
@@ -35,7 +37,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
             <div className="text-[150px] font-[900] h-[200px] flex flex-row relative">
                 <motion.div
                     className=""
-                    key={sec1 === 0 ? "sec1" : sec1}
+                    key={global.mode + "sec1" + sec1}
                     initial={motionInitial}
                     animate={motionAnimate}
                     transition={motionTransition}
@@ -43,7 +45,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {sec1}
                 </motion.div>
                 <motion.div
-                    key={sec0 === 0 ? "sec0" : sec0}
+                    key={global.mode + "sec0" + sec0}
                     initial={motionInitial}
                     animate={motionAnimate}
                     transition={motionTransition}

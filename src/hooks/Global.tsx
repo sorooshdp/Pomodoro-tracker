@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from "react";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
-import RotateLeftRoundedIcon from "@mui/icons-material/RotateLeftRounded";
+// import RotateLeftRoundedIcon from "@mui/icons-material/RotateLeftRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
+import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 
 // Default Global type ../types.d.ts:  Global["global"]
 export let globalDefault: Global["global"] = initGlobalDefault({
@@ -30,7 +31,8 @@ export const icons = {
     MoreHorizRoundedIcon: <MoreHorizRoundedIcon className="center" style={{ fontSize: "40px" }} />,
     PauseRoundedIcon: <PauseRoundedIcon className="center transition-colors" style={{ fontSize: "60px" }} />,
     PlayArrowRoundedIcon: <PlayArrowRoundedIcon className="center transition-colors" style={{ fontSize: "60px" }} />,
-    RotateLeftRoundedIcon: <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />,
+    // RotateLeftRoundedIcon: <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />,
+    SkipNextRoundedIcon: <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />,
 };
 
 export const globalCtx = createContext<Global>({ global: globalDefault, setGlobalKey: () => {}, setGlobal: () => {} });

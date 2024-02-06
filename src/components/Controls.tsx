@@ -4,7 +4,7 @@ import { memo, useCallback } from "react";
 
 const whileTap = { scale: 0.8 };
 
-const Controls = memo(({ resetTimer }: { resetTimer: () => void }) => {
+const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
     const { global, setGlobalKey } = useGlobal();
 
     const toggleRunning = useCallback(() => {
@@ -36,9 +36,9 @@ const Controls = memo(({ resetTimer }: { resetTimer: () => void }) => {
             <motion.div
                 whileTap={whileTap}
                 className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"
-                onClick={resetTimer}
+                onClick={skipHandle}
             >
-                {icons.RotateLeftRoundedIcon}
+                {icons.SkipNextRoundedIcon}
             </motion.div>
         </div>
     );

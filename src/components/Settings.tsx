@@ -1,11 +1,11 @@
-import { useCallback, useMemo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useGlobal } from "../hooks/Global";
 import Dialog from "./Dialog";
 import { createPortal } from "react-dom";
 
 const settingsDialogData = { w: 500, h: 600, title: "Settings" };
 
-const Settings = () => {
+const Settings = memo(() => {
     const { global, setGlobalKey } = useGlobal();
 
     const settingsShowHandle = useCallback((newState: boolean) => {
@@ -28,6 +28,6 @@ const Settings = () => {
         </>,
         document.body
     );
-};
+});
 
 export default Settings;

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { useGlobal } from "../hooks/Global";
 import Clock from "./Clock";
 import Controls from "./Controls";
@@ -10,12 +10,12 @@ export enum Mode {
     ShortBreak,
 }
 
-const Timer = () => {
+const Timer = memo(() => {
     const { global, setGlobalKey } = useGlobal();
 
     useEffect(() => {
         if (global.seconds <= 0) {
-            resetTimer();
+            skipHandle();
         }
         if (global.running) {
             const timer = setInterval(() => {
@@ -28,28 +28,56 @@ const Timer = () => {
         }
     }, [global.seconds, global.running]);
 
-    const resetTimer = useCallback(() => {
-        setGlobalKey("running", false);
+    const resetTimer = useCallback(
+        (to: Mode) => {
+            setGlobalKey("running", false);
+            switch (to) {
+                case Mode.Focus:
+                    setGlobalKey("seconds", global.focusLength);
+                    break;
+                case Mode.LongBreak:
+                    setGlobalKey("seconds", global.longBreakLength);
+                    break;
+                case Mode.ShortBreak:
+                    setGlobalKey("seconds", global.shortBreakLength);
+                    break;
+            }
+        },
+        [global.mode]
+    );
+
+    const skipHandle = useCallback(() => {
+        let nextMode: Mode;
         switch (global.mode) {
             case Mode.Focus:
-                setGlobalKey("seconds", global.focusLength);
+                if (global.countToLongBreak === 0) {
+                    nextMode = Mode.LongBreak;
+                    setGlobalKey("countToLongBreak", 4);
+                } else {
+                    nextMode = Mode.ShortBreak;
+                }
+                setGlobalKey("mode", nextMode);
                 break;
             case Mode.LongBreak:
-                setGlobalKey("seconds", global.longBreakLength);
-                break;
             case Mode.ShortBreak:
-                setGlobalKey("seconds", global.shortBreakLength);
+                nextMode = Mode.Focus;
+                setGlobalKey("mode", nextMode);
+                setGlobalKey("countToLongBreak", global.countToLongBreak - 1);
                 break;
+            default:
+                // UNREACHABLE
+                nextMode = Mode.Focus;
         }
-    }, [global.mode]);
+        resetTimer(nextMode);
+    }, [global.countToLongBreak, global.mode, resetTimer]);
 
     return (
         <div className="flex flex-col items-center justify-center">
             <PomodoroMode />
             <Clock seconds={global.seconds} />
-            <Controls resetTimer={resetTimer} />
+            <Controls skipHandle={skipHandle} />
         </div>
     );
-};
+});
 
 export default Timer;
