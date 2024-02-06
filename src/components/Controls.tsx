@@ -16,7 +16,7 @@ const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
     }, []);
 
     return (
-        <div className="flex justify-between items-center w-fit absolute bottom-[100px]">
+        <div className="flex justify-between items-center w-fit ">
             <motion.div
                 whileTap={whileTap}
                 className="relative w-[80px] h-[60px] rounded-[100px] text-txt bg-second mx-[0.5rem]"

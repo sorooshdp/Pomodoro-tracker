@@ -9,7 +9,7 @@
 
 #root {
     max-width: 1280px;
-    margin: 0 auto;
+    margin: auto auto;
     padding: 2rem;
     text-align: center;
 }
@@ -19,6 +19,7 @@
     --text-color: #f2f9ff;
     --second-color: #000;
     --primary-color: #4cacff;
+    --shadow-color: #000;
     font-family: "roboto-flex", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;
@@ -51,6 +52,8 @@ body {
     align-items: flex-start;
     min-width: 320px;
     min-height: 100vh;
+    box-shadow: inset 0px 0px 170px -80px var(--shadow-color);
+    transition: all 0.5s ease ;
 }
 
 h1 {

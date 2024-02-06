@@ -5,13 +5,14 @@ import { memo, useCallback } from "react";
 
 const whileTap = { scale: 0.8 };
 
-const PomodoroMode = memo(() => {
+const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void }) => {
     const { global, setGlobalKey } = useGlobal();
 
     const changeMode = useCallback(
         (mode: Mode) => {
             setGlobalKey("running", false);
             setGlobalKey("mode", mode);
+            changeShadow(mode);
             switch (mode) {
                 case Mode.Focus:
                     setGlobalKey("seconds", global.focusLength);
@@ -23,11 +24,11 @@ const PomodoroMode = memo(() => {
                     setGlobalKey("seconds", global.shortBreakLength);
             }
         },
-        [global.focusLength, global.longBreakLength, global.shortBreakLength]
+        [global.focusLength, global.longBreakLength, global.shortBreakLength, changeShadow]
     );
 
     return (
-        <div className="flex text-[18px] font-bold h-[60px] justify-between mt-[1rem] mb-[2rem] w-[384px] py-[4px] px-[2px] bg-black rounded-full">
+        <div className="flex text-[18px] font-bold h-[60px] justify-between   w-[384px] py-[4px] px-[2px] bg-black rounded-full">
             <motion.div
                 className={`
                     ${

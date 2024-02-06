@@ -15,7 +15,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
     const sec1 = Math.floor(secs / 10);
 
     return (
-        <div className="flex flex-col justify-center items-center absolute top-[45%] -translate-y-1/2">
+        <div className="flex flex-col justify-center items-center ">
             <div className="text-[150px] font-[900] h-[150px] flex flex-row">
                 <motion.div
                     key={global.mode + "min1" + min1}
