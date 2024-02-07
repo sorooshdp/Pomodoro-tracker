@@ -20,10 +20,15 @@ const Timer = memo(() => {
         }
         if (global.running) {
             const timer = setInterval(() => {
-                setGlobalKey("seconds", global.seconds - 1);
-                shadowHandle(true, global, global.mode);
-                document.title = titleHandle(global.seconds - 1, global.mode);
-            }, 1000);
+                const now = Date.now();
+
+                if (now - global.lastTick >= 1000) {
+                    setGlobalKey("lastTick", global.lastTick + 1000);
+                    setGlobalKey("seconds", global.seconds - 1);
+                    shadowHandle(true, global, global.mode);
+                    document.title = titleHandle(global.seconds - 1, global.mode);
+                }
+            }, 50);
 
             return () => clearInterval(timer);
         }

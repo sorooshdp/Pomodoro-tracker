@@ -9,6 +9,7 @@ import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 export let globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
     mode: 0, // Mode.Focus gives reading undefined error
+    lastTick: 0,
     running: false,
     seconds: 25 * 60,
     focusLength: 25 * 60,

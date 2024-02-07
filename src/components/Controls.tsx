@@ -17,6 +17,7 @@ const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
         [windowSize.h]
     );
     const toggleRunning = useCallback(() => {
+        setGlobalKey("lastTick", Date.now());
         shadowHandle(!global.running, global, global.mode);
         setGlobalKey("running", !global.running);
     }, [global.running, global.mode]);

@@ -3,6 +3,7 @@ interface Global {
     global: {
         mode: Mode;
         running: boolean;
+        lastTick: number;
         seconds: number;
         focusLength: number;
         countToLongBreak: number;
