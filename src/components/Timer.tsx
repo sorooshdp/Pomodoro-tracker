@@ -3,7 +3,7 @@ import { useGlobal } from "../hooks/Global";
 import Clock from "./Clock";
 import Controls from "./Controls";
 import PomodoroMode from "./PomodoroMode";
-import { shadowHandle } from "../utils/lib";
+import { shadowHandle, titleHandle } from "../utils/lib";
 
 export enum Mode {
     Focus,
@@ -22,6 +22,7 @@ const Timer = memo(() => {
             const timer = setInterval(() => {
                 setGlobalKey("seconds", global.seconds - 1);
                 shadowHandle(true, global, global.mode);
+                document.title = titleHandle(global.seconds - 1, global.mode);
             }, 1000);
 
             return () => clearInterval(timer);

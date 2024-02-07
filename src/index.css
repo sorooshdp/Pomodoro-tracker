@@ -19,9 +19,9 @@
     --text-color: #f2f9ff;
     --second-color: #000;
     --primary-color: #4cacff;
-    --shadow-color: #000;
+    --shadow-color: #121212;
     --shadow-length: 0px;
-    --shadow-spread: 100px;
+    --shadow-spread: 300px;
     font-family: "roboto-flex", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;
     font-weight: 400;

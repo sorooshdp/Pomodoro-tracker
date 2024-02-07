@@ -11,27 +11,40 @@ export function shadowHandle(running: boolean, global?: Global["global"], mode?:
     switch (mode) {
         case Mode.Focus:
             index.setProperty("--shadow-color", "#DC2626");
-            index.setProperty(
-                "--shadow-length",
-                `${((global.focusLength - global.seconds) * h) / global.focusLength}px`
-            );
-            index.setProperty("--shadow-spread", `${(global.focusLength - global.seconds) * 100}px`);
+            index.setProperty("--shadow-length", `${calcShadowLength(global.seconds, global.focusLength, h)}px`);
             break;
         case Mode.LongBreak:
             index.setProperty("--shadow-color", "#16A34A");
-            index.setProperty(
-                "--shadow-length",
-                `${((global.longBreakLength - global.seconds) * h) / global.longBreakLength}px`
-            );
-            index.setProperty("--shadow-spread", `${(global.longBreakLength - global.seconds) * 100}px`);
+            index.setProperty("--shadow-length", `${calcShadowLength(global.seconds, global.longBreakLength, h)}px`);
             break;
         case Mode.ShortBreak:
             index.setProperty("--shadow-color", "#4CACFF");
-            index.setProperty(
-                "--shadow-length",
-                `${((global.shortBreakLength - global.seconds) * h) / global.shortBreakLength}px`
-            );
-            index.setProperty("--shadow-spread", `${(global.shortBreakLength - global.seconds) * 100}px`);
+            index.setProperty("--shadow-length", `${calcShadowLength(global.seconds, global.shortBreakLength, h)}px`);
             break;
     }
+}
+
+function calcShadowLength(seconds: number, length: number, h: number): number {
+    return ((length - seconds) * h) / length;
+}
+
+export function clamp(number: number, min: number, max: number): number {
+    return Math.max(Math.min(number, max), min);
+}
+
+export function log<T>(val: T): T {
+    console.log(val);
+    return val;
+}
+
+export function formatSeconds(seconds: number): string {
+    return `${Math.floor(seconds / 60)
+        .toString()
+        .padStart(2, "0")}:${(seconds % 60).toString().padStart(2, "0")}`;
+}
+
+export function titleHandle(seconds: number, mode: Mode): string {
+    return `${formatSeconds(seconds)} - ${
+        mode === Mode.Focus ? "Focus" : mode === Mode.ShortBreak ? "Short break" : "Long break"
+    }`;
 }
