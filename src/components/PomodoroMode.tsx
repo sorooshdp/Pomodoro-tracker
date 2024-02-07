@@ -3,9 +3,10 @@ import { useGlobal } from "../hooks/Global";
 import { Mode } from "./Timer";
 import { memo, useCallback, CSSProperties, useMemo } from "react";
 import useWindowSize from "../hooks/useWindowSize";
+import { shadowHandle } from "../utils/lib";
 const whileTap = { scale: 0.8 };
 
-const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void }) => {
+const PomodoroMode = memo(() => {
     const { global, setGlobalKey } = useGlobal();
     const windowSize = useWindowSize();
 
@@ -20,7 +21,7 @@ const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void 
         (mode: Mode) => {
             setGlobalKey("running", false);
             setGlobalKey("mode", mode);
-            changeShadow(mode);
+            shadowHandle(false);
             switch (mode) {
                 case Mode.Focus:
                     setGlobalKey("seconds", global.focusLength);
@@ -32,7 +33,7 @@ const PomodoroMode = memo(({ changeShadow }: { changeShadow: (to: Mode) => void 
                     setGlobalKey("seconds", global.shortBreakLength);
             }
         },
-        [global.focusLength, global.longBreakLength, global.shortBreakLength, changeShadow]
+        [global.focusLength, global.longBreakLength, global.shortBreakLength]
     );
 
     return (

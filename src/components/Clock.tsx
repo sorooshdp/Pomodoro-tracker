@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 import { memo } from "react";
 import { useGlobal } from "../hooks/Global";
 
-const motionInitial = { opacity: 0, y: 0 };
-const motionAnimate = { opacity: 1, y: 0 };
+const motionInitial = { opacity: 0 };
+const motionAnimate = { opacity: 1 };
 const motionTransition = { duration: 0.3 };
 const Clock = memo(({ seconds }: { seconds: number }) => {
     const { global } = useGlobal();
@@ -16,7 +16,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
 
     return (
         <div className="flex flex-col justify-center items-center ">
-            <div className="text-[150px] font-[900] h-[150px] flex flex-row">
+            <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row">
                 <motion.div
                     key={global.mode + "min1" + min1}
                     initial={motionInitial}
@@ -34,7 +34,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {min0}
                 </motion.div>
             </div>
-            <div className="text-[150px] font-[900] h-[200px] flex flex-row relative">
+            <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row relative">
                 <motion.div
                     className=""
                     key={global.mode + "sec1" + sec1}
