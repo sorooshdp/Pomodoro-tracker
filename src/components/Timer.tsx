@@ -3,7 +3,7 @@ import { useGlobal } from "../hooks/Global";
 import Clock from "./Clock";
 import Controls from "./Controls";
 import PomodoroMode from "./PomodoroMode";
-import { shadowHandle, titleHandle } from "../utils/lib";
+import { playAlarm, shadowHandle, titleHandle } from "../utils/lib";
 
 export enum Mode {
     Focus,
@@ -17,17 +17,15 @@ const Timer = memo(() => {
     useEffect(() => {
         if (global.seconds <= 0) {
             skipHandle();
+            playAlarm();
         }
         if (global.running) {
             const timer = setInterval(() => {
-                const now = Date.now();
-
-                if (now - global.lastTick >= 1000) {
-                    setGlobalKey("lastTick", global.lastTick + 1000);
-                    setGlobalKey("seconds", global.seconds - 1);
-                    shadowHandle(true, global, global.mode);
-                    document.title = titleHandle(global.seconds - 1, global.mode);
-                }
+                if (Date.now() - global.lastTick < 1000) return;
+                setGlobalKey("lastTick", global.lastTick + 1000);
+                setGlobalKey("seconds", global.seconds - 1);
+                shadowHandle(true, global, global.mode);
+                document.title = titleHandle(global.seconds - 1, global.mode);
             }, 50);
 
             return () => clearInterval(timer);
