@@ -71,3 +71,15 @@ h1 {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+input[type=number] { 
+    width: 96px;
+    height: 40px;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    width: 30px;
+    height: 18px;
+}

@@ -2,6 +2,7 @@ import { memo, useCallback, useMemo } from "react";
 import { useGlobal } from "../hooks/Global";
 import Dialog from "./Dialog";
 import { createPortal } from "react-dom";
+import SettingItems from "./SettingItems";
 
 const settingsDialogData = { w: 500, h: 600, title: "Settings" };
 
@@ -12,7 +13,7 @@ const Settings = memo(() => {
         setGlobalKey("settingsShow", newState);
     }, []);
 
-    const dialogChildren = useMemo(() => <div className="center">Todo</div>, []);
+    const dialogChildren = useMemo(() => <SettingItems />, []);
 
     return createPortal(
         <>
