@@ -54,7 +54,7 @@ const Timer = memo(() => {
         let nextMode: Mode;
         switch (global.mode) {
             case Mode.Focus:
-                if (global.countToLongBreak === 0) {
+                if (global.countToLongBreak <= 0) {
                     nextMode = Mode.LongBreak;
                     setGlobalKey("countToLongBreak", 4);
                 } else {
