@@ -48,3 +48,8 @@ export function titleHandle(seconds: number, mode: Mode): string {
         mode === Mode.Focus ? "Focus" : mode === Mode.ShortBreak ? "Short break" : "Long break"
     }`;
 }
+
+export function playAlarm() {
+    const audio = new Audio("/alarm_beep_2.mp3");
+    audio.play();
+}
