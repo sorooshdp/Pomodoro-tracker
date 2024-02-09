@@ -1,3 +1,5 @@
+import { log } from "../utils/lib";
+
 const CheckboxSettingItem = ({
     title,
     globalState,
@@ -11,13 +13,14 @@ const CheckboxSettingItem = ({
     onText: string;
     toggle: () => void;
 }) => {
+    log(globalState);
     return (
-        <div className="flex justify-between my-[35px] mx-[2.5rem]">
+        <div className="flex justify-between my-[30px] mx-[2.0rem]">
             <label>{title}</label>
             <div className="cursor-pointer" onClick={toggle}>
-                <span className={`${globalState && "text-slate-700"} transition-all duration-200`}>{offText}</span>
-                <span className="text-slate-400"> / </span>
-                <span className={`${!globalState && "text-slate-700"} transition-all duration-200`}>{onText}</span>
+                <span className={`${globalState && "text-zinc-700"} transition-all duration-200`}>{offText}</span>
+                <span className="text-zinc-400"> / </span>
+                <span className={`${!globalState && "text-zinc-700"} transition-all duration-200`}>{onText}</span>
             </div>
         </div>
     );

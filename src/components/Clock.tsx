@@ -5,6 +5,7 @@ import { useGlobal } from "../hooks/Global";
 const motionInitial = { opacity: 0 };
 const motionAnimate = { opacity: 1 };
 const motionTransition = { duration: 0.3 };
+
 const Clock = memo(({ seconds }: { seconds: number }) => {
     const { global } = useGlobal();
     const mins = Math.floor(seconds / 60);
@@ -14,12 +15,15 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
     const sec0 = secs % 10;
     const sec1 = Math.floor(secs / 10);
 
-    console.log(global.verticalClock);
-
     return (
-        <div className={`${global.verticalClock ? "flex-col" : "flex-row"} flex justify-center items-center`}>
-            <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row">
+        <div className={`${global.verticalClock ? "flex-col" : "flex-row"} flex justify-center items-center relative`}>
+            <div
+                className={`text-[150px] leading-[150px] font-[900] h-fit flex flex-row w-[210px] ${
+                    !global.verticalClock && "absolute left-[-250px]"
+                }`}
+            >
                 <motion.div
+                    className="w-1/2"
                     key={global.mode + "min1" + min1}
                     initial={motionInitial}
                     animate={motionAnimate}
@@ -28,6 +32,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {min1}
                 </motion.div>
                 <motion.div
+                    className="w-1/2"
                     key={global.mode + "min0" + min0}
                     initial={motionInitial}
                     animate={motionAnimate}
@@ -36,10 +41,16 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {min0}
                 </motion.div>
             </div>
-            {!global.verticalClock && <div className="text-[150px] pb-[10px]">:</div>}
-            <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row relative">
+            {!global.verticalClock && (
+                <div className="text-[150px] pb-[10px] absolute left-1/2 -translate-x-1/2">:</div>
+            )}
+            <div
+                className={`text-[150px] leading-[150px] font-[900] h-fit flex flex-row w-[210px] ${
+                    !global.verticalClock && "absolute right-[-250px]"
+                }`}
+            >
                 <motion.div
-                    className=""
+                    className="w-1/2"
                     key={global.mode + "sec1" + sec1}
                     initial={motionInitial}
                     animate={motionAnimate}
@@ -48,6 +59,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {sec1}
                 </motion.div>
                 <motion.div
+                    className="w-1/2"
                     key={global.mode + "sec0" + sec0}
                     initial={motionInitial}
                     animate={motionAnimate}
