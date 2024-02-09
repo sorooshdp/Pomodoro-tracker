@@ -11,6 +11,8 @@ interface Global {
         longBreakLength: number;
         completedPomodoros: number;
         settingsShow: boolean;
+        alarm: boolean;
+        verticalClock: boolean;
     };
     setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
     setGlobal: (newState: Global["global"]) => any;

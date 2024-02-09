@@ -17,12 +17,12 @@ const Timer = memo(() => {
     useEffect(() => {
         if (global.seconds <= 0) {
             skipHandle();
-            playAlarm();
+            if (global.alarm) playAlarm();
         }
         if (global.running) {
             const timer = setInterval(() => {
-                if (Date.now() - global.lastTick < 1000) return;
-                setGlobalKey("lastTick", global.lastTick + 1000);
+                if (Date.now() - global.lastTick < 10) return;
+                setGlobalKey("lastTick", global.lastTick + 10);
                 setGlobalKey("seconds", global.seconds - 1);
                 shadowHandle(true, global, global.mode);
                 document.title = titleHandle(global.seconds - 1, global.mode);
@@ -30,7 +30,7 @@ const Timer = memo(() => {
 
             return () => clearInterval(timer);
         }
-    }, [global.seconds, global.running, global.mode]);
+    }, [global.seconds, global.running, global.mode, global.alarm]);
 
     const resetTimer = useCallback((to: Mode) => {
         setGlobalKey("running", false);

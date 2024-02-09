@@ -14,8 +14,10 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
     const sec0 = secs % 10;
     const sec1 = Math.floor(secs / 10);
 
+    console.log(global.verticalClock);
+
     return (
-        <div className="flex flex-col justify-center items-center ">
+        <div className={`${global.verticalClock ? "flex-col" : "flex-row"} flex justify-center items-center`}>
             <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row">
                 <motion.div
                     key={global.mode + "min1" + min1}
@@ -34,6 +36,7 @@ const Clock = memo(({ seconds }: { seconds: number }) => {
                     {min0}
                 </motion.div>
             </div>
+            {!global.verticalClock && <div className="text-[150px] pb-[10px]">:</div>}
             <div className="text-[150px] leading-[150px] font-[900] h-fit flex flex-row relative">
                 <motion.div
                     className=""

@@ -18,6 +18,8 @@ export let globalDefault: Global["global"] = initGlobalDefault({
     longBreakLength: 15 * 60,
     completedPomodoros: 0,
     settingsShow: false,
+    alarm: true,
+    verticalClock: true,
 });
 
 function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
