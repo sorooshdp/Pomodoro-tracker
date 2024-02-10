@@ -38,6 +38,8 @@ export const icons = {
     SkipNextRoundedIcon: <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />,
 };
 
+export const alarmAudio = new Audio("/alarm_beep_2.mp3");
+
 export const globalCtx = createContext<Global>({ global: globalDefault, setGlobalKey: () => {}, setGlobal: () => {} });
 export const useGlobal = () => useContext<Global>(globalCtx);
 

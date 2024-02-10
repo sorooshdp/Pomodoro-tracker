@@ -1,4 +1,5 @@
 import { Mode } from "../components/Timer";
+import { alarmAudio } from "../hooks/Global";
 
 export function shadowHandle(running: boolean, global?: Global["global"], mode?: Mode) {
     const index = document.documentElement.style;
@@ -50,6 +51,5 @@ export function titleHandle(seconds: number, mode: Mode): string {
 }
 
 export function playAlarm() {
-    const audio = new Audio("/alarm_beep_2.mp3");
-    audio.play();
+    alarmAudio.play();
 }
