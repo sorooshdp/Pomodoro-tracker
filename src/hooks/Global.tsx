@@ -6,7 +6,7 @@ import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 
 // Default Global type ../types.d.ts:  Global["global"]
-export let globalDefault: Global["global"] = initGlobalDefault({
+export const globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
     mode: 0, // Mode.Focus gives reading undefined error
     lastTick: 0,

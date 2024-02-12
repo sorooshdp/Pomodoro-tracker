@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { memo, useCallback, CSSProperties, useMemo } from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import { shadowHandle } from "../utils/lib";
-import { Mode } from "./Timer";
+import { Mode } from "../utils/lib";
 
 const whileTap = { scale: 0.8 };
 
@@ -20,11 +20,11 @@ const Controls = memo(({ skipHandle }: { skipHandle: () => void }) => {
         setGlobalKey("lastTick", Date.now());
         shadowHandle(!global.running, global, global.mode);
         setGlobalKey("running", !global.running);
-    }, [global.running, global.mode]);
+    }, [global, setGlobalKey]);
 
     const settingShowHandle = useCallback(() => {
         setGlobalKey("settingsShow", true);
-    }, []);
+    }, [setGlobalKey]);
 
     return (
         <div style={containerStyleMemo} className="flex justify-between absolute items-center w-fit ">

@@ -9,6 +9,9 @@ module.exports = {
                 second: "var(--second-color)"
             },
         },
+        screens: {
+            'sm': { 'max' : '600px'}
+        }
     },
     plugins: [],
 };

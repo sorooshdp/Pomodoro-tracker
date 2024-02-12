@@ -11,7 +11,7 @@ const Settings = memo(() => {
 
     const settingsShowHandle = useCallback((newState: boolean) => {
         setGlobalKey("settingsShow", newState);
-    }, []);
+    }, [setGlobalKey]);
 
     const dialogChildren = useMemo(() => <SettingItems />, []);
 

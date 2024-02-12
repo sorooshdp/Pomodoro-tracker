@@ -1,5 +1,10 @@
-import { Mode } from "../components/Timer";
 import { alarmAudio } from "../hooks/Global";
+
+export enum Mode {
+    Focus,
+    LongBreak,
+    ShortBreak,
+}
 
 export function shadowHandle(running: boolean, global?: Global["global"], mode?: Mode) {
     const index = document.documentElement.style;
@@ -8,7 +13,7 @@ export function shadowHandle(running: boolean, global?: Global["global"], mode?:
         index.setProperty("--shadow-color", "#121212");
         return;
     }
-    let h = window.innerHeight / 2;
+    const h = window.innerHeight / 2;
     switch (mode) {
         case Mode.Focus:
             index.setProperty("--shadow-color", "#DC2626");

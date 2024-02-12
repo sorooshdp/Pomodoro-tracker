@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useGlobal } from "../hooks/Global";
-import { Mode } from "./Timer";
+import { Mode } from "../utils/lib";
 import { memo, useCallback, CSSProperties, useMemo } from "react";
 import useWindowSize from "../hooks/useWindowSize";
 import { shadowHandle } from "../utils/lib";
@@ -33,7 +33,7 @@ const PomodoroMode = memo(() => {
                     setGlobalKey("seconds", global.shortBreakLength);
             }
         },
-        [global.focusLength, global.longBreakLength, global.shortBreakLength]
+        [global.focusLength, global.longBreakLength, global.shortBreakLength,setGlobalKey]
     );
 
     return (

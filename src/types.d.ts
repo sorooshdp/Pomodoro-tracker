@@ -15,7 +15,7 @@ interface Global {
         verticalClock: boolean;
     };
     setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
-    setGlobal: (newState: Global["global"]) => any;
+    setGlobal: (newState: Global["global"]) => void;
 }
 
 interface WindowSize {
