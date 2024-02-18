@@ -56,7 +56,7 @@ const Timer = memo(() => {
     useEffect(() => {
         if (global.running) {
             const timer = setInterval(() => {
-                if (Date.now() - global.lastTick < 10) return;
+                if (Date.now() - global.lastTick < 1000) return;
                 if (global.seconds - 1 <= 0) {
                     skipHandle();
                     if (global.alarm) playAlarm();
@@ -64,7 +64,7 @@ const Timer = memo(() => {
                     clearInterval(timer);
                     return;
                 }
-                setGlobalKey("lastTick", global.lastTick + 10);
+                setGlobalKey("lastTick", global.lastTick + 1000);
                 setGlobalKey("seconds", global.seconds - 1);
                 shadowHandle(true, global, global.mode);
                 document.title = titleHandle(global.seconds - 1, global.mode);
