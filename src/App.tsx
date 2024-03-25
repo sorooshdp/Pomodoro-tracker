@@ -1,5 +1,6 @@
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
+import TodoMenu from "./components/Todomenu";
 import createGlobal, { globalCtx } from "./hooks/Global";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
                 setGlobalKey: setGlobalKey,
             }}
         >
+            <TodoMenu />
             <Timer />
             <Settings />
         </globalCtx.Provider>

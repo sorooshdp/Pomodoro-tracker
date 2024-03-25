@@ -4,6 +4,8 @@ import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 // import RotateLeftRoundedIcon from "@mui/icons-material/RotateLeftRounded";
 import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
+import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
+import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
 
 // Default Global type ../types.d.ts:  Global["global"]
 export const globalDefault: Global["global"] = initGlobalDefault({
@@ -20,6 +22,7 @@ export const globalDefault: Global["global"] = initGlobalDefault({
     settingsShow: false,
     alarm: true,
     verticalClock: true,
+    isTodoOpen: false
 });
 
 function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
@@ -36,6 +39,8 @@ export const icons = {
     PlayArrowRoundedIcon: <PlayArrowRoundedIcon className="center transition-colors" style={{ fontSize: "60px" }} />,
     // RotateLeftRoundedIcon: <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />,
     SkipNextRoundedIcon: <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />,
+    ArrowLeftRoundedIcon: <ArrowLeftRoundedIcon style={{ fontSize: "40px" }} />,
+    ArrowRightRoundedIcon: <ArrowRightRoundedIcon style={{ fontSize: "80px" }} />,
 };
 
 export const alarmAudio = new Audio("/alarm_beep_2.mp3");

@@ -13,6 +13,7 @@ interface Global {
         settingsShow: boolean;
         alarm: boolean;
         verticalClock: boolean;
+        isTodoOpen: boolean;
     };
     setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
     setGlobal: (newState: Global["global"]) => void;
