@@ -6,6 +6,7 @@ import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
 import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
 import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded";
 import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded";
+import { AddCircleOutlineRounded, DeleteOutlineRounded, ModeEditOutlineRounded } from "@mui/icons-material";
 
 // Default Global type ../types.d.ts:  Global["global"]
 export const globalDefault: Global["global"] = initGlobalDefault({
@@ -22,7 +23,8 @@ export const globalDefault: Global["global"] = initGlobalDefault({
     settingsShow: false,
     alarm: true,
     verticalClock: true,
-    isTodoOpen: false
+    isTodoOpen: false,
+    todoList: [],
 });
 
 function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
@@ -30,6 +32,11 @@ function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
     // Processing Default here
     globalDefault.running = false;
     globalDefault.settingsShow = false;
+
+    if (globalDefault.todoList.length === 0) {
+        globalDefault.todoList.push({ text: "wake up!", done: false, id: Date.now() });
+    }
+
     return globalDefault;
 }
 
@@ -41,6 +48,9 @@ export const icons = {
     SkipNextRoundedIcon: <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />,
     ArrowLeftRoundedIcon: <ArrowLeftRoundedIcon style={{ fontSize: "40px" }} />,
     ArrowRightRoundedIcon: <ArrowRightRoundedIcon style={{ fontSize: "80px" }} />,
+    AddCircleOutlineRounded: <AddCircleOutlineRounded style={{ fontSize: "40px" }} />,
+    DeleteOutlineRounded: <DeleteOutlineRounded style={{ fontSize: "25px" }} />,
+    ModeEditOutlineRounded: <ModeEditOutlineRounded style={{ fontSize: "25px" }} />,
 };
 
 export const alarmAudio = new Audio("/alarm_beep_2.mp3");
