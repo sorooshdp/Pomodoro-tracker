@@ -24,6 +24,7 @@ export const globalDefault: Global["global"] = initGlobalDefault({
     alarm: true,
     verticalClock: true,
     isTodoOpen: false,
+    editingTodoId: null,
     todoList: [],
 });
 
@@ -32,6 +33,7 @@ function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
     // Processing Default here
     globalDefault.running = false;
     globalDefault.settingsShow = false;
+    globalDefault.editingTodoId = null;
 
     if (globalDefault.todoList.length === 0) {
         globalDefault.todoList.push({ text: "wake up!", done: false, id: Date.now() });
@@ -47,7 +49,12 @@ export const icons = {
     // RotateLeftRoundedIcon: <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />,
     SkipNextRoundedIcon: <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />,
     ArrowLeftRoundedIcon: <ArrowLeftRoundedIcon style={{ fontSize: "40px" }} />,
-    ArrowRightRoundedIcon: <ArrowRightRoundedIcon style={{ fontSize: "80px" }} />,
+    ArrowRightRoundedIcon: (
+        <ArrowRightRoundedIcon
+            className="opacity-0 hover:opacity-100 cursor-pointer"
+            style={{ fontSize: "80px", transition: "opacity 0.5s ease, transform 0.3s ease" }}
+        />
+    ),
     AddCircleOutlineRounded: <AddCircleOutlineRounded style={{ fontSize: "40px" }} />,
     DeleteOutlineRounded: <DeleteOutlineRounded style={{ fontSize: "25px" }} />,
     ModeEditOutlineRounded: <ModeEditOutlineRounded style={{ fontSize: "25px" }} />,

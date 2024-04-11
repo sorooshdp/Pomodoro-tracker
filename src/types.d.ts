@@ -14,6 +14,7 @@ interface Global {
         alarm: boolean;
         verticalClock: boolean;
         isTodoOpen: boolean;
+        editingTodoId : number | null;
         todoList: Array<TodoList>;
     };
     setGlobalKey: <K extends keyof Global["global"]>(key: K, newVal: Global["global"][K]) => void;
