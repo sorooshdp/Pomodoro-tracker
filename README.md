@@ -13,6 +13,16 @@ Pomodoro Tracker is a responsive web application designed to help you manage you
 - **To-Do List**: Integrated to-do list to manage tasks alongside your Pomodoro sessions.
 - **Custom Hooks**: Utilizes custom React hooks for state management and responsiveness.
 
+## Technologies
+
+This project utilizes the following technologies:
+
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Tailwind CSS**: A utility-first CSS framework for creating custom designs.
+- **Vite**: A fast build tool and development server.
+- **Framer Motion**: A library for creating animations and gestures in React.
+- **@mui/material** and **@mui/icons-material**: Material UI components and icons for React.
 
 ## Getting Started
 
