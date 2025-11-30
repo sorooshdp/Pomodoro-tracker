@@ -1,9 +1,9 @@
 import { motion } from "framer-motion"
 import { useGlobal } from "../hooks/Global"
-import { Mode } from "../utils/lib"
 import { memo, useCallback, CSSProperties, useMemo } from "react"
 import useWindowSize from "../hooks/useWindowSize"
 import { shadowHandle } from "../utils/lib"
+import { Mode } from "../types/Mode"
 const whileTap = { scale: 0.8 }
 
 const PomodoroMode = memo(() => {

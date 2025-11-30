@@ -4,7 +4,7 @@ import Clock from "./Clock"
 import Controls from "./Controls"
 import PomodoroMode from "./PomodoroMode"
 import { playAlarm, shadowHandle, titleHandle } from "../utils/lib"
-import { Mode } from "../utils/lib"
+import { Mode } from "../types/Mode"
 
 const Timer = memo(() => {
     const { global, setGlobalKey } = useGlobal()

@@ -1,9 +1,10 @@
-import { icons, useGlobal } from "../hooks/Global"
+import { useGlobal } from "../hooks/Global"
+import { icons } from "../constants/icons"
 import { motion } from "framer-motion"
 import { memo, useCallback, CSSProperties, useMemo } from "react"
 import useWindowSize from "../hooks/useWindowSize"
 import { shadowHandle } from "../utils/lib"
-import { Mode } from "../utils/lib"
+import { Mode } from "../types/Mode"
 
 const whileTap = { scale: 0.8 }
 

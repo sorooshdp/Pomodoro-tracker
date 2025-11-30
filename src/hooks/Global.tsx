@@ -1,21 +1,10 @@
 import { createContext, useContext, useState } from "react"
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded"
-import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded"
-// import RotateLeftRoundedIcon from "@mui/icons-material/RotateLeftRounded";
-import PauseRoundedIcon from "@mui/icons-material/PauseRounded"
-import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded"
-import ArrowLeftRoundedIcon from "@mui/icons-material/ArrowLeftRounded"
-import ArrowRightRoundedIcon from "@mui/icons-material/ArrowRightRounded"
-import {
-    AddCircleOutlineRounded,
-    DeleteOutlineRounded,
-    ModeEditOutlineRounded,
-} from "@mui/icons-material"
+import { debounce } from "../utils/debounce"
 
 // Default Global type ../types.d.ts:  Global["global"]
 export const globalDefault: Global["global"] = initGlobalDefault({
     // Default global object
-    mode: 0, // Mode.Focus gives reading undefined error
+    mode: 0, // Mode.Focus = 0 (enum defined in types.d.ts)
     lastTick: 0,
     running: false,
     seconds: 25 * 60,
@@ -50,46 +39,13 @@ function initGlobalDefault(globalDefault: Global["global"]): Global["global"] {
     return globalDefault
 }
 
-export const icons = {
-    MoreHorizRoundedIcon: (
-        <MoreHorizRoundedIcon className="center" style={{ fontSize: "40px" }} />
-    ),
-    PauseRoundedIcon: (
-        <PauseRoundedIcon
-            className="center transition-colors"
-            style={{ fontSize: "60px" }}
-        />
-    ),
-    PlayArrowRoundedIcon: (
-        <PlayArrowRoundedIcon
-            className="center transition-colors"
-            style={{ fontSize: "60px" }}
-        />
-    ),
-    // RotateLeftRoundedIcon: <RotateLeftRoundedIcon className="center" style={{ fontSize: "40px" }} />,
-    SkipNextRoundedIcon: (
-        <SkipNextRoundedIcon className="center" style={{ fontSize: "40px" }} />
-    ),
-    ArrowLeftRoundedIcon: <ArrowLeftRoundedIcon style={{ fontSize: "40px" }} />,
-    ArrowRightRoundedIcon: (
-        <ArrowRightRoundedIcon
-            className="opacity-0 hover:opacity-100 cursor-pointer"
-            style={{
-                fontSize: "80px",
-                transition: "opacity 0.5s ease, transform 0.3s ease",
-            }}
-        />
-    ),
-    AddCircleOutlineRounded: (
-        <AddCircleOutlineRounded style={{ fontSize: "40px" }} />
-    ),
-    DeleteOutlineRounded: <DeleteOutlineRounded style={{ fontSize: "25px" }} />,
-    ModeEditOutlineRounded: (
-        <ModeEditOutlineRounded style={{ fontSize: "25px" }} />
-    ),
-}
-
 export const alarmAudio = new Audio("/alarm_beep_2.mp3")
+
+// Debounced localStorage save to improve performance
+const debouncedLsSave = debounce(
+    (key: string, obj: object) => lsSet(key, obj),
+    500,
+)
 
 export const globalCtx = createContext<Global>({
     global: globalDefault,
@@ -103,7 +59,7 @@ export const useGlobal = () => useContext<Global>(globalCtx)
  *
  * App.tsx:
  * ```jsx
- * const { global, setGlobal, setGlobalKey } = createGlobal();
+ * const { global, setGlobal, setGlobalKey } = useCreateGlobal();
  * return (
  *     <globalCtx.Provider value={{ global: global, setGlobal: setGlobal, setGlobalKey: setGlobalKey }}>
  *          <SomeComp />
@@ -117,7 +73,7 @@ export const useGlobal = () => useContext<Global>(globalCtx)
  * ```
  *
  */
-const createGlobal = () => {
+const useCreateGlobal = () => {
     const [globalState, setGlobalState] =
         useState<Global["global"]>(globalDefault)
 
@@ -126,24 +82,34 @@ const createGlobal = () => {
         newVal: Global["global"][K],
     ) {
         setGlobalState((prev) => {
-            prev[key] = newVal
-            lsSet("globalDefault", prev) // TODO this is not good
-            return { ...prev }
+            const newState = { ...prev, [key]: newVal }
+            debouncedLsSave("globalDefault", newState)
+            return newState
         })
     }
     function setGlobal(newState: Global["global"]) {
         setGlobalState(newState)
-        lsSet("globalDefault", newState)
+        debouncedLsSave("globalDefault", newState)
     }
     return { global: globalState, setGlobalKey, setGlobal }
 }
 
-export async function lsSet(key: string, obj: object) {
-    localStorage.setItem(key, JSON.stringify(obj))
+export function lsSet(key: string, obj: object): void {
+    try {
+        localStorage.setItem(key, JSON.stringify(obj))
+    } catch (error) {
+        console.error("Failed to save to localStorage:", error)
+    }
 }
 
 export function lsGet<T>(key: string): null | T {
-    return JSON.parse(localStorage.getItem(key) ?? "null")
+    try {
+        const item = localStorage.getItem(key)
+        return item ? JSON.parse(item) : null
+    } catch (error) {
+        console.error("Failed to read from localStorage:", error)
+        return null
+    }
 }
 
-export default createGlobal
+export default useCreateGlobal

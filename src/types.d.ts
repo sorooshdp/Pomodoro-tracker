@@ -1,7 +1,7 @@
 interface Global {
     // default global type here
     global: {
-        mode: Mode
+        mode: number
         running: boolean
         lastTick: number
         seconds: number

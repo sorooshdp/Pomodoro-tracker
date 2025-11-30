@@ -1,10 +1,5 @@
 import { alarmAudio } from "../hooks/Global"
-
-export enum Mode {
-    Focus,
-    LongBreak,
-    ShortBreak,
-}
+import { Mode } from "../types/Mode"
 
 export function shadowHandle(
     running: boolean,

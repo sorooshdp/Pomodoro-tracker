@@ -1,10 +1,10 @@
 import Settings from "./components/Settings"
 import Timer from "./components/Timer"
 import TodoMenu from "./components/Todomenu"
-import createGlobal, { globalCtx } from "./hooks/Global"
+import useCreateGlobal, { globalCtx } from "./hooks/Global"
 
 function App() {
-    const { global, setGlobal, setGlobalKey } = createGlobal()
+    const { global, setGlobal, setGlobalKey } = useCreateGlobal()
 
     return (
         <globalCtx.Provider
