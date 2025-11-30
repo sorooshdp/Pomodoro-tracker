@@ -6,12 +6,12 @@ module.exports = {
                 bg: "var(--bg-color)",
                 txt: "var(--text-color)",
                 prim: "var(--primary-color)",
-                second: "var(--second-color)"
+                second: "var(--second-color)",
             },
         },
         screens: {
-            'sm': { 'max' : '600px'}
-        }
+            sm: { max: "600px" },
+        },
     },
     plugins: [],
-};
+}

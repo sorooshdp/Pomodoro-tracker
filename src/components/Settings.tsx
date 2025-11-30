@@ -1,19 +1,22 @@
-import { memo, useCallback, useMemo } from "react";
-import { useGlobal } from "../hooks/Global";
-import Dialog from "./Dialog";
-import { createPortal } from "react-dom";
-import SettingItems from "./SettingItems";
+import { memo, useCallback, useMemo } from "react"
+import { useGlobal } from "../hooks/Global"
+import Dialog from "./Dialog"
+import { createPortal } from "react-dom"
+import SettingItems from "./SettingItems"
 
-const settingsDialogData = { w: 500, h: 600, title: "Settings" };
+const settingsDialogData = { w: 500, h: 600, title: "Settings" }
 
 const Settings = memo(() => {
-    const { global, setGlobalKey } = useGlobal();
+    const { global, setGlobalKey } = useGlobal()
 
-    const settingsShowHandle = useCallback((newState: boolean) => {
-        setGlobalKey("settingsShow", newState);
-    }, [setGlobalKey]);
+    const settingsShowHandle = useCallback(
+        (newState: boolean) => {
+            setGlobalKey("settingsShow", newState)
+        },
+        [setGlobalKey],
+    )
 
-    const dialogChildren = useMemo(() => <SettingItems />, []);
+    const dialogChildren = useMemo(() => <SettingItems />, [])
 
     return createPortal(
         <>
@@ -23,12 +26,16 @@ const Settings = memo(() => {
                     onClick={() => settingsShowHandle(false)}
                 ></div>
             )}
-            <Dialog data={settingsDialogData} show={global.settingsShow} setShow={settingsShowHandle}>
+            <Dialog
+                data={settingsDialogData}
+                show={global.settingsShow}
+                setShow={settingsShowHandle}
+            >
                 {dialogChildren}
             </Dialog>
         </>,
-        document.body
-    );
-});
+        document.body,
+    )
+})
 
-export default Settings;
+export default Settings
